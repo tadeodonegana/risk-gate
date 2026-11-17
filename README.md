@@ -20,19 +20,6 @@ The final tier is the higher of the two. Jev can raise the tier above the rules,
 
 risk-gate then counts the valid human approvals and sets a commit status named `risk-gate`. Make that status a required check, and GitHub blocks the merge until the PR has enough approvals.
 
-The design follows section 5, "Human approval, scaled by risk", of [How the Claude Code team does code review](https://x.com/i/article/2114435487905808384):
-
-| Rule in the article | In risk-gate |
-|---|---|
-| The change sets the tier, not the author | Jev reads only the file list and the diff, not the PR title or body |
-| A classifier sets the tier | A Jev `Score` question over your ordered tiers |
-| Some paths always need more approval (CI files) | `rules:`; CI workflows and the risk-gate config always get the highest tier |
-| Agent approvals are not human approvals | Reviews from bot accounts never count |
-| A human must review agent PRs | `require_human_for_agent_prs: true`: a PR from a bot account needs at least 1 human approval |
-| An approval covers one commit | Only approvals on the latest commit count |
-
-Not in risk-gate for now: the second classifier that can ask for one more approval, relaxed rules for trusted authors, and a check that the specific operator of the agent approved (any human with write access is enough).
-
 ## Setup
 
 1. Get an [OpenRouter](https://openrouter.ai) API key. Add it as the repository (or organization) secret `OPENROUTER_API_KEY`.
