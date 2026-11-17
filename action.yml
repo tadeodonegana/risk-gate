@@ -1,0 +1,38 @@
+name: Risk Gate
+description: Human approval for pull requests, scaled by risk. Path rules and the Jev decision model set the number of approvals.
+branding:
+  icon: shield
+  color: orange
+
+inputs:
+  api-key:
+    description: OpenRouter API key (or a TypeSafe key, with api-url). Without a key, every PR gets the decider.on_error tier.
+    required: false
+  api-url:
+    description: Base URL of the System One API. Use https://api.typesafe.ai/v1 for a direct TypeSafe key.
+    required: false
+    default: https://openrouter.ai/api/v1
+  config-path:
+    description: Path of the config file. The action reads it from the base branch of the PR.
+    required: false
+    default: .github/risk-gate.yml
+  github-token:
+    description: Token for the GitHub API. Keep the default; the decision cache trusts only comments by github-actions[bot].
+    required: false
+    default: ${{ github.token }}
+
+outputs:
+  tier:
+    description: The risk tier of the PR.
+  required-approvals:
+    description: The number of human approvals that the PR needs.
+  approvals:
+    description: The number of valid human approvals on the head commit.
+  state:
+    description: The risk-gate status (success or pending).
+  cached:
+    description: true when the decision came from the PR comment and Jev was not called.
+
+runs:
+  using: node24
+  main: dist/index.js

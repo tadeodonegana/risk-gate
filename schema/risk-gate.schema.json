@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "mode": {
+      "default": "enforce",
+      "description": "shadow: comment only, the status is always success.",
+      "type": "string",
+      "enum": [
+        "enforce",
+        "shadow"
+      ]
+    },
+    "tiers": {
+      "minItems": 2,
+      "maxItems": 10,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "description": "When this tier applies. Jev reads this text, so write it in English."
+          },
+          "approvals": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Human approvals that this tier needs."
+          }
+        },
+        "required": [
+          "name",
+          "description",
+          "approvals"
+        ],
+        "additionalProperties": false
+      },
+      "description": "Risk tiers, from the lowest to the highest risk."
+    },
+    "rules": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "A label for the PR comment.",
+            "type": "string",
+            "minLength": 1
+          },
+          "paths": {
+            "description": "Globs. This part matches when one changed file (or its old name) matches one glob.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "min_changed_lines": {
+            "description": "This part matches when additions + deletions >= this value.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "authors": {
+            "description": "This part matches when the PR author is in this list.",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "min_tier": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$",
+            "description": "The lowest tier that a matched PR can get."
+          }
+        },
+        "required": [
+          "min_tier"
+        ],
+        "additionalProperties": false,
+        "description": "A rule matches only when all of its given parts match."
+      }
+    },
+    "require_human_for_agent_prs": {
+      "default": false,
+      "description": "If true, a PR opened by a bot account (an agent) needs at least 1 human approval, also when its tier needs 0.",
+      "type": "boolean"
+    },
+    "decider": {
+      "default": {},
+      "type": "object",
+      "properties": {
+        "model": {
+          "default": "typesafe/jev-1.14",
+          "type": "string",
+          "minLength": 1
+        },
+        "on_error": {
+          "description": "The tier to use when Jev fails. Default: the highest tier.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+        },
+        "max_state_bytes": {
+          "default": 30000,
+          "description": "Size limit of the input to Jev. Keep it under about 32 KB.",
+          "type": "integer",
+          "minimum": 2000,
+          "maximum": 200000
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "tiers"
+  ],
+  "additionalProperties": false,
+  "title": "risk-gate config"
+}

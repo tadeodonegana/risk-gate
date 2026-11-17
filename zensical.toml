@@ -1,0 +1,96 @@
+# Docs site for risk-gate. Build: zensical build --clean (output: site/).
+# Hosted on Read the Docs: .readthedocs.yaml sets site_url to the URL of each version.
+[project]
+site_name = "risk-gate"
+site_description = "Human approval for pull requests, scaled by risk."
+site_url = "https://risk-gate.readthedocs.io/en/stable/"
+repo_url = "https://github.com/tadeodonegana/risk-gate"
+repo_name = "tadeodonegana/risk-gate"
+edit_uri = "edit/main/docs/"
+docs_dir = "docs"
+site_dir = "site"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Get started" = [
+    { "Install" = "get-started/install.md" },
+    { "Configure" = "get-started/configure.md" },
+    { "Enforce" = "get-started/enforce.md" },
+  ] },
+  { "Concepts" = [
+    { "How a run works" = "concepts/how-it-works.md" },
+    { "How the tier is decided" = "concepts/tiers.md" },
+    { "Which approvals count" = "concepts/approvals.md" },
+  ] },
+  { "Reference" = [
+    { "Configuration" = "reference/configuration.md" },
+    { "Action inputs and outputs" = "reference/action.md" },
+  ] },
+  { "Simulator" = "simulator.md" },
+  { "Security and limits" = "security.md" },
+  { "Development" = "development.md" },
+]
+
+extra_css = ["stylesheets/extra.css"]
+extra_javascript = ["assets/simulator.js"]
+
+[project.theme]
+variant = "classic"
+language = "en"
+# Style: the author's blog (greys, system monospace, dashed lines). Colors live in stylesheets/extra.css.
+font = false
+# The header uses the page color, so the logo has dark ink. extra.css inverts it in the dark scheme.
+logo = "assets/logo-light.svg"
+favicon = "assets/favicon.svg"
+features = [
+  "content.action.edit",
+  "content.code.copy",
+  "content.tabs.link",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.sections",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+]
+
+[project.theme.icon]
+repo = "fontawesome/brands/github"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[project.markdown_extensions]
+admonition = {}
+attr_list = {}
+def_list = {}
+md_in_html = {}
+toc.permalink = true
+pymdownx.details = {}
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true

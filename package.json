@@ -1,0 +1,38 @@
+{
+  "name": "risk-gate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Human approval for pull requests, scaled by risk. Path rules and the Jev decision model set the number of approvals.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tadeodonegana/risk-gate.git"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --platform=node --target=node24 --format=esm --outfile=dist/index.js --legal-comments=none --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\"",
+    "schema": "node scripts/schema.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "all": "npm run typecheck && npm test && npm run schema && npm run build",
+    "docs": "uv run --no-project --with-requirements requirements-docs.txt zensical serve",
+    "docs:build": "uv run --no-project --with-requirements requirements-docs.txt zensical build --clean"
+  },
+  "dependencies": {
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
+    "picomatch": "^4.0.7",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/picomatch": "^4.0.3",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
