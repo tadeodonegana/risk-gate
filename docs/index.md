@@ -118,16 +118,3 @@ The `risk-gate` status shows the approval count. Only approvals on the latest co
     [Read more](concepts/tiers.md#when-jev-fails)
 
 </div>
-
-## Where the idea comes from
-
-risk-gate follows section 5, "Human approval, scaled by risk", of [How the Claude Code team does code review](https://x.com/i/article/2114435487905808384):
-
-| Rule in the article | In risk-gate |
-|---|---|
-| The change sets the tier, not the author | Jev reads only the file list and the diff, not the PR title or body. |
-| A classifier sets the tier | A Jev `Score` question over your ordered tiers. |
-| Some paths always need more approval (CI files) | Path rules. CI workflows and the risk-gate config always get the highest tier. |
-| Agent approvals are not human approvals | Reviews from bot accounts never count. |
-| A human must review agent PRs | `require_human_for_agent_prs: true` |
-| An approval covers one commit | Only approvals on the latest commit count. |
