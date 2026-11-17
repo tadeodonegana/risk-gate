@@ -44,18 +44,3 @@ One-time setup, after the repository is public:
 1. Sign in to Read the Docs with your GitHub account.
 2. Import the `risk-gate` repository.
 3. In the project settings, activate the versions to publish, and turn on **Build pull requests for this project**.
-
-## Release
-
-1. Run `npm run all` and commit `dist/` and `schema/`.
-2. Open `action.yml` on GitHub, click **Draft a release**, and select **Publish this Action to the GitHub Marketplace**.
-3. Create the tag `v1.2.3` and publish the release. With immutable releases turned on, it cannot change later.
-4. Move the major tag to the new release. It is a plain tag, not a release:
-
-    ```sh
-    git fetch --tags
-    git tag -f v1 v1.2.3
-    git push -f origin v1
-    ```
-
-For a breaking change, release `v2.0.0` and create a new `v2` tag. Keep `v1` on the last `v1.x` release.
