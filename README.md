@@ -114,5 +114,3 @@ npm run docs     # preview the docs site (needs uv) on http://localhost:8000
 The docs site lives in `docs/` and `zensical.toml`, and Read the Docs builds it with `.readthedocs.yaml`.
 
 `src/core/` has the pure logic (rules, Jev input, decision, approvals, comment). `src/jev.ts` calls the System One API. `src/github.ts` is the only file that calls GitHub. `src/run.ts` connects them.
-
-To release: run `npm run all`, commit `dist/`, tag `v1.0.0`, and move the `v1` tag to the same commit. Publish to the GitHub Marketplace from the release page. Turn on immutable releases in the repository settings.
